@@ -25,8 +25,10 @@ Unzip the code into your webserver root. Start your webserver
 Demo Run
 ========
 
-cd /var/www/html
-git clone https://github.com/nareshv/BoringTasks.git
+```
+bash$ cd /var/www/html
+bash$ git clone https://github.com/nareshv/BoringTasks.git
+```
 
 Open http://127.0.0.1/BoringTasks/ in your browser
 
