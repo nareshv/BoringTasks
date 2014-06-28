@@ -11,8 +11,8 @@ Screenshot
 Requirements
 ============
 
-- Any webserver of your choice.
-- Couchdb (In case you want to replicate your data from browser to it)
+- [Any webserver of your choice.](https://gist.github.com/willurd/5720255)
+- [Couchdb](https://www.iriscouch.com/) (In case you want to replicate your data from browser to it)
 - Modern Browser (Firefox, Chrome)
 
 
