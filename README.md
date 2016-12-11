@@ -19,7 +19,11 @@ Requirements
 Installation
 ============
 
-Unzip the code into your webserver root. Start your webserver
+1. Unzip the code into your webserver root. Start your webserver
+
+Or
+
+2. `make` will start the application in the terminal. Open [http://127.0.0.1:8934](http://127.0.0.1:8934) to access the application
 
 
 Demo Run
@@ -55,4 +59,4 @@ nareshv@
 License
 =======
 
-Isn't MIT hot these days ?
+MIT

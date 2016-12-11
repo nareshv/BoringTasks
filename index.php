@@ -1,9 +1,10 @@
+<?php require_once './config.php'; ?>
 <!doctype html>
 <html lang="en">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title>nareshv@ • Tasks</title>
+        <title><?php echo $CONFIG['username']; ?> • Tasks</title>
         <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.4.2/pure-min.css">
         <link rel="stylesheet" href="style/base.css">
@@ -14,7 +15,7 @@
     </head>
     <body>
         <div id="main">
-            <h1>nareshv</h1>
+            <h1><?php echo $CONFIG['username']; ?></h1>
         </div>
         <div class="pure-g">
             <div class="pure-u-2-24">

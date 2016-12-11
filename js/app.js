@@ -320,17 +320,18 @@
         var context  = {
             months : []
         };
+        var yyyy =  moment(new Date()).format("YYYY");
         for (var i = 1; i <= 12; i++) {
             var record = {};
             if (i < 10) {
                 record = {
-                    id   : "0" + i + "-2014",
-                    text : months[i - 1] + "/2014"
+                    id   : "0" + i + "-" + yyyy,
+                    text : months[i - 1] + "/" + yyyy
                 };
             } else {
                 record = {
-                    id   : i + "-2014",
-                    text : months[i - 1] + "/2014"
+                    id   : i + "-" + yyyy,
+                    text : months[i - 1] + "/" + yyyy
                 };
             }
             //if (record.id == moment(new Date()).format("MM-YYYY")) {
@@ -340,7 +341,8 @@
             context.months.push(record);
         }
 
-        var html     = '<a class="pure-menu-heading">2014</a>' + template(context);
+        var yyyy =  moment(new Date()).format("YYYY");
+        var html     = '<a class="pure-menu-heading">' + yyyy + '</a>' + template(context);
         $('#menu-values').html(html);
         $(document).on('click', '#menu-values li a', function(e) {
             $(this).parent().parent().find('.pure-menu-selected').removeClass('pure-menu-selected');
