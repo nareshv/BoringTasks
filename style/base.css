@@ -517,3 +517,11 @@ label[for='toggle-all'] {
     margin: 0 auto;
     padding: 2ex;
 }
+.pure-menu-selected {
+    background-color: #5dcff3;
+}
+.pure-menu .pure-menu-heading {
+    margin-top: 0;
+    background-color: #565d64;
+    color: white;
+}

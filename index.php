@@ -15,33 +15,19 @@
     </head>
     <body>
         <div id="main">
-            <h1><?php echo $CONFIG['username']; ?></h1>
+            <h1><?php echo $CONFIG['username']; ?>'s Tasks</h1>
         </div>
         <div class="pure-g">
             <div class="pure-u-2-24">
-                <div class="pure-menu pure-menu-open" id="menu-values">
-<!--
-                    <a class="pure-menu-heading">Past Months</a>
-                    <ul>
-                        <li><a href="#" id="jan_2014">Jan-2014</a></li>
-                        <li><a href="#" id="feb_2014">Feb-2014</a></li>
-                        <li class="pure-menu-heading">Current Month</li>
-                        <li class="pure-menu-selected"><a href="#" id="mar_2014">Mar-2014</a></li>
-                        <li class="pure-menu-heading">Future Months</li>
-                        <li><a href="#" id="apr_2014">Apr-2014</a></li>
-                        <li><a href="#" id="may_2014">May-2014</a></li>
-                        <li><a href="#" id="jun_2014">Jun-2014</a></li>
-                        <li><a href="#" id="jul_2014">Jul-2014</a></li>
-                        <li><a href="#" id="aug_2014">Aug-2014</a></li>
-                        <li><a href="#" id="sep_2014">Sep-2014</a></li>
-                        <li><a href="#" id="oct_2014">Oct-2014</a></li>
-                        <li><a href="#" id="nov_2014">Nov-2014</a></li>
-                        <li><a href="#" id="dec_2014">Dec-2014</a></li>
-                    </ul>
--->
-                </div>
+                <div class="pure-menu pure-menu-open" id="menu-values-prev"></div>
             </div>
-            <div class="pure-u-22-24" id="v2">
+            <div class="pure-u-2-24">
+                <div class="pure-menu pure-menu-open" id="menu-values-now"></div>
+            </div>
+            <div class="pure-u-2-24">
+                <div class="pure-menu pure-menu-open" id="menu-values-next"></div>
+            </div>
+            <div class="pure-u-18-24" id="v2">
                 <section id="todoapp" class="grid3">
                     <header id="header">
                         <input id="new-todo" placeholder=">>> What needs to be done ?" autofocus>

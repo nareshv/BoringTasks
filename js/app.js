@@ -17,11 +17,11 @@
     var appconfig = {
         classes : {
             after: {
-                v2 : "pure-u-11-24",
-                v3 : "pure-u-11-24"
+                v2 : "pure-u-9-24",
+                v3 : "pure-u-9-24"
             },
             before: {
-                v2 : "pure-u-22-24",
+                v2 : "pure-u-18-24",
                 v3 : "pure-u-6-24 hidden"
             }
         },
@@ -219,7 +219,7 @@
             title.push('[' + moment(todo.endDate).format('MM-DD-YYYY') + ']')
         }
         if (appconfig.ui.showrevision) {
-            title.push('<r' + todo._rev.split('-')[0] + '>')
+            title.push('rev' + todo._rev.split('-')[0] + ', ')
         }
         title.push(todo.title);
         return title.join(' ');
@@ -310,7 +310,7 @@
         doneButton.addEventListener('click', doneButtonClicked, false);
     }
 
-    function generateMenu() {
+    function generateMenu(yyyy, menuvalues) {
         var source   = $("#menu-template").html();
         var template = Handlebars.compile(source);
         var months   = [
@@ -320,7 +320,6 @@
         var context  = {
             months : []
         };
-        var yyyy =  moment(new Date()).format("YYYY");
         for (var i = 1; i <= 12; i++) {
             var record = {};
             if (i < 10) {
@@ -341,10 +340,9 @@
             context.months.push(record);
         }
 
-        var yyyy =  moment(new Date()).format("YYYY");
         var html     = '<a class="pure-menu-heading">' + yyyy + '</a>' + template(context);
-        $('#menu-values').html(html);
-        $(document).on('click', '#menu-values li a', function(e) {
+        $(menuvalues).append(html);
+        $(document).on('click', '.pure-menu li a', function(e) {
             $(this).parent().parent().find('.pure-menu-selected').removeClass('pure-menu-selected');
             var a = $(this).attr('id').split('_')[1];
             appconfig.runtime.curMonth = a;
@@ -354,7 +352,10 @@
         });
     }
 
-    generateMenu();
+    var yyyy =  moment(new Date()).format("YYYY");
+    generateMenu(parseInt(yyyy, 10) - 1, '#menu-values-prev');
+    generateMenu(yyyy, '#menu-values-now');
+    generateMenu(parseInt(yyyy, 10) + 1, '#menu-values-next');
     addEventListeners();
     showTodos();
 
