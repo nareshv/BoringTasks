@@ -44,9 +44,11 @@
 
     db.info(function(err, info) {
         db.changes({
-            since: info.update_seq,
-            continuous: true,
-            onChange: showTodos
+            since : 'now',
+            live: true,
+            include_docs : false
+        }).on('change', function() {
+            showTodos();
         });
     });
 
@@ -59,10 +61,10 @@
             notes: "",
             completed: false
         };
-        db.put(todo, function callback(err, result) {
-            if (!err) {
-                console.log('Successfully posted a todo!');
-            }
+        db.put(todo).then(function (result) {
+            console.log('Added new todo');
+        }).catch(function(err) {
+            console.log('Failed to create new todo.');
         });
     }
 
@@ -82,12 +84,24 @@
 
     function checkboxChanged(todo, event) {
         todo.completed = event.target.checked;
-        db.put(todo);
+        db.get(todo._id).then(function(todo) {
+            db.put(todo).then(function(result) {
+                console.log('Successfully updated checkbox status.');
+            }).catch(function(err){
+                console.log('Failed to update the checkbox status.');
+            })
+        });
     }
 
     // User pressed the delete button for a todo, delete it
     function deleteButtonPressed(todo) {
-        db.remove(todo);
+        db.get(todo._id).then(function(doc) {
+            return db.remove(doc);
+        }).then(function(result) {
+            console.log('successfully removed the todo.');
+        }).catch(function(err) {
+            console.log('Failed to remove the todo')
+        })
     }
 
     // User pressed the change date button for a todo, delete it
@@ -151,14 +165,15 @@
         // actual task of putting the elements into context
         var title = document.getElementById("editortitle");
         title.innerHTML = getDisplayTitle(todo);
+        console.log("Fetching data from : %s", todo._id);
         editor.importFile(todo._id, todo.notes);
         var saveButton = document.getElementById("editorsave");
         if (saveButton) {
-            saveButton.id  = todo._id;
+            $(saveButton).data('uuid', todo._id);
         }
         var doneButton = document.getElementById("editordone");
         if (doneButton) {
-            doneButton.id  = todo._id;
+            $(doneButton).data('uuid', todo._id);
         }
     }
 
@@ -172,36 +187,30 @@
 
     // User has clicked on the save button
     function saveButtonClicked(event) {
-        var id = event.currentTarget.id;
-        db.get(id, function(err, doc) {
-            if (err) {
-                console.log("Failed to save the doc notes....");
-            } else {
-                doc.notes = editor.exportFile();
-                db.put(doc, function callback(err, result) {
-                    if (!err) {
-                        console.log('Successfully posted a todo!');
-                    }
-                });
-            }
-        });
+        var id = $(event.target).data('uuid');
+        console.log('Fetching save button : %s', id);
+        db.get(id).then(function(doc){
+            doc.notes = editor.exportFile();
+            db.put(doc).catch(function(err){
+                console.log('Failed to update on clicking save button');
+
+            });
+        }).catch(function(err){
+            console.log('Failed to get on clicking save button clicked.')
+        })
     }
     function doneButtonClicked(event) {
-        var id = event.currentTarget.id ? event.currentTarget.id : event.id;
-        db.get(id, function(err, doc) {
-            if (err) {
-                console.log("Failed to save the doc notes....");
-                console.log(err);
-            } else {
-                doc.notes = editor.exportFile();
-                db.put(doc, function callback(err, result) {
-                    if (!err) {
-                        console.log('Successfully posted a todo!');
-                    }
-                });
+        var id = $(event.target).data('uuid');
+        db.get(id).then(function(doc){
+            doc.notes = editor.exportFile();
+            db.put(doc).then(function() {
                 closeEditor();
-            }
-        });
+            }).catch(function(err) {
+                console.log('Failed to save the doc on done');
+            })
+        }).catch(function(err){
+            console.log('Failed to get on clicking save button clicked.')
+        })
     }
 
     // If they press enter while editing an entry, blur it to trigger save
@@ -236,7 +245,7 @@
         var label = document.createElement('label');
         var date  = document.createElement("span");
         date.className = "label-date";
-        date.appendChild(document.createTextNode(moment(todo.endDate).format('MM-DD-YYYY')));
+        date.appendChild(document.createTextNode(moment(todo.endDate).format('DD/MMM dddd')));
         label.appendChild(date);
         var message = document.createElement("span");
         message.className = "label-message";

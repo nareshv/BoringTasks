@@ -80,7 +80,7 @@
         <script src="js/handlebars-v1.3.0.js"></script>
         <script src="epiceditor/js/epiceditor.min.js"></script>
         <script src="js/moment.min.js"></script>
-        <script src="js/pouchdb-nightly.js"></script>
+        <script src="js/pouchdb-6.0.7.min.js"></script>
         <script src="js/app.js"></script>
     </body>
 </html>
